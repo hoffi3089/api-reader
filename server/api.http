@@ -1,0 +1,209 @@
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "rashed",
+  "password": "qwerty1200"
+}
+
+> {%
+    client.global.set("auth_token", response.body.token);
+%}
+
+### logout
+POST http://localhost:8000/api/auth/logout/
+Content-Type: application/json
+Authorization: Token {{auth_token}}
+
+### me
+GET http://localhost:8000/api/auth/me
+Content-Type: application/json
+Authorization: Token {{auth_token}}
+
+### Create Book
+POST http://localhost:8000/api/books
+Content-Type: application/json
+Authorization: Token {{auth_token}}
+
+{
+  "title": "book With Image",
+  "authors": "Rahaf",
+  "language": "en",
+  "pages": 60
+}
+
+### Get All Books
+GET http://localhost:8000/api/books
+Content-Type: application/json
+
+### Update Book
+PUT http://localhost:8000/api/books/24
+Content-Type: application/json
+Authorization: Token {{auth_token}}
+
+{
+  "title": "book 24 edited",
+  "authors": "knight",
+  "language": "en",
+  "pages": 1200,
+  "genres": [4, 3]
+}
+
+
+### Search For a book
+GET http://localhost:8000/api/books/search?title=book%203&authors=knight&limit=5&offset=0
+Content-Type: application/json
+
+
+### Get Book
+GET http://localhost:8000/api/books/27
+Content-Type: application/json
+Authorization: Token {{auth_token}}
+
+### Create Genere
+POST http://localhost:8000/api/books/genres
+Content-Type: application/json
+Authorization: Token {{auth_token}}
+
+{
+  "name": "History"
+}
+
+### Get Generes
+GET http://localhost:8000/api/books/genres
+Content-Type: application/json
+
+### Get Book Genres
+GET http://localhost:8000/api/books/24/genres
+Content-Type: application/json
+
+### Create User Book
+POST http://localhost:8000/api/user/books
+Content-Type: application/json
+Authorization: Token {{auth_token}}
+
+{
+  "book_id": 17,
+  "shelves": [1]
+}
+
+### Get User Books
+GET http://localhost:8000/api/user/books
+Content-Type: application/json
+Authorization: Token {{auth_token}}
+
+### Update User Book
+PUT http://localhost:8000/api/user/books/24
+Content-Type: application/json
+Authorization: Token {{auth_token}}
+
+{
+  "shelves": [1, 2]
+}
+
+### Delete User Book
+DELETE http://localhost:8000/api/user/books/4
+Content-Type: application/json
+Authorization: Token {{auth_token}}
+
+
+### Create Shelf
+POST http://localhost:8000/api/user/shelves
+Authorization: Token {{auth_token}}
+
+{
+  "name": "shelf 4"
+}
+
+### Get Shelves
+GET http://localhost:8000/api/user/shelves
+Authorization: Token {{auth_token}}
+
+
+### Update Shelf name
+PUT http://localhost:8000/api/user/shelves/4
+Authorization: Token {{auth_token}}
+
+{
+  "name": "shelf 4 edited"
+}
+
+
+### Add book to shelf
+POST http://localhost:8000/api/user/shelves/4/books
+Authorization: Token {{auth_token}}
+
+{
+  "user_book_id": 9
+}
+
+### Get book shelf
+GET http://localhost:8000/api/user/shelves/4/books
+Authorization: Token {{auth_token}}
+
+### Remove book from shelf
+DELETE http://localhost:8000/api/user/shelves/4/books/9
+Authorization: Token {{auth_token}}
+
+
+### Set Book as current reading
+PUT http://localhost:8000/api/user/currently-reading
+Authorization: Token {{auth_token}}
+Content-Type: application/json
+
+{
+  "user_book_id": 11,
+  "status": true
+}
+
+### Update user progress
+PUT http://localhost:8000/api/user/currently-reading/progress
+Authorization: Token {{auth_token}}
+Content-Type: application/json
+
+{
+  "user_book_id": 11,
+  "progress": 1200
+}
+
+### Get current reading
+GET http://localhost:8000/api/user/currently-reading
+Authorization: Token {{auth_token}}
+
+### Get Book Session
+GET http://localhost:8000/api/user/books/11/sessions
+Authorization: Token {{auth_token}}
+
+### Create Book Session
+POST http://localhost:8000/api/user/books/9/sessions
+Authorization: Token {{auth_token}}
+
+{}
+
+### Delete Book Session
+DELETE http://localhost:8000/api/user/books/9/sessions/11
+Authorization: Token {{auth_token}}
+
+
+### Update Book Session
+PUT http://localhost:8000/api/user/books/9/sessions/10
+Authorization: Token {{auth_token}}
+Content-Type: application/json
+
+{
+  "finished_at": "2022-12-27T18:48:48.508Z"
+}
+
+
+### Mark book as done
+PUT http://localhost:8000/api/user/books/11/done
+Authorization: Token {{auth_token}}
+Content-Type: application/json
+
+{}
+
+
+### Get all read books
+GET http://localhost:8000/api/user/books/read/all
+Authorization: Token {{auth_token}}
+Content-Type: application/json
